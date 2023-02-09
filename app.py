@@ -28,9 +28,10 @@ def main():
         }
 
 def valuesGetting(data):
+    processorType = data.get('processor')
     mycursor = mydb.cursor()
     sql = "INSERT INTO tbljob_inventory (Line_ID, Asset_ID, Ansible_Hostname, inventory_hostname, distribution, distribution_version, os_family, processor_type, processor_model ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = (data.get('Line_ID'), 1, data.get('Ansible_Hostname'), data.get('inventory_hostname'), data.get('distribution'), data.get('distribution_version'), data.get('os_family'), data.get('processor_type'), data.get('processor_model'))
+    val = (data.get('Line_ID'), 1, data.get('hostname'), data.get('inventory_hostname'), data.get('distribution'), data.get('distribution_version'), data.get('os_family'), processorType[1], processorType[2])
     mycursor.execute(sql, val)
     mydb.commit()
     if(mycursor.rowcount):
