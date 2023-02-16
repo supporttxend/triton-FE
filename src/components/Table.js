@@ -4,16 +4,25 @@ import axios from "axios";
 
 const Table = () => {
   const [data, setData] = useState([]);
-  
+  const [loading, setloading] = useState(false);
   useEffect(() => {
-    async function fetchData() {
-        const response = await axios.get('http://localhost:2001/data')
-        if(response.data.status === 200){
-          setData(response.data.data)
-        }
-    }
+     setloading(true)
     fetchData()
   }, []);
+  async function fetchData() {
+    try {
+      const response = await axios.get('http://localhost:2001/data')
+      if(response.data.status === 200){
+        setData(response.data.data) 
+      }
+      setloading(false)
+    } catch (error) {
+      setloading(false)
+    }
+
+      
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -61,7 +70,7 @@ const Table = () => {
     [],
   );
 
-  return <MaterialReactTable columns={columns} data={data} />;
+  return <MaterialReactTable columns={columns} data={data} state={{ isLoading:loading }}/>;
 };
 
 export default Table;
