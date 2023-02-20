@@ -3,6 +3,7 @@ import MaterialReactTable from 'material-react-table';
 import axios from "axios";
 import env from "react-dotenv";
 import { makeStyles } from '@material-ui/core/styles';
+import './Table.css';
 
 const useStyles = makeStyles({
   customTableRow: {
@@ -10,8 +11,19 @@ const useStyles = makeStyles({
       backgroundColor: '#B7E5FF',
     },
   },
-  
+  customTableCell: {
+    padding: '0px',
+    margin: '0px',
+    '&:first-child': {
+      paddingLeft: '16px',
+    },
+    '&:last-child': {
+      paddingRight: '16px',
+    },
+  }
+
 });
+
 
 const Table = () => {
   const [data, setData] = useState([]);
@@ -35,7 +47,6 @@ const Table = () => {
 
 
   }
-
   const columns = useMemo(
     () => [
       {
@@ -45,7 +56,7 @@ const Table = () => {
         enableGlobalFilter: true,
         enableSorting: true,
         showSortIcon: true,
-        
+
       },
 
       {
@@ -76,7 +87,7 @@ const Table = () => {
       {
         accessorKey: 'distribution_version',
         header: 'Distribution Version',
-        size: 160,
+        size: 200,
       },
       {
         accessorKey: 'os_family',
@@ -91,7 +102,7 @@ const Table = () => {
       {
         accessorKey: 'processor_model',
         header: 'Processor Model',
-        size: 50,
+        size: 100,
       },
     ],
     [],
@@ -99,31 +110,43 @@ const Table = () => {
 
   return (
     <>
-    <MaterialReactTable
-      columns={columns}
-      data={data}
-      enableColumnActions={false}
-      enableGlobalFilter={false}
-      enableColumnFilters={true}
-      enablePagination={false}
-      enableSorting={true}
-      showSortIcon={true}
-      enableBottomToolbar={false}
-      enableTopToolbar={false}
-      initialState={{ showColumnFilters: true }}
-      // muiTableHeadCellFilterTextFieldProps={{
-      //   sx: { m: '0.2rem 0', width: '100%' },
-      //   variant: 'outlined',
-        
-      // }}
-      muiTableBodyRowProps={{
-        className: classes.customTableRow,
-        hover: false,
-      }}
+      <MaterialReactTable
+      // size={"small"}
+      // enableStickyHeader={true}
+        columns={columns}
+        data={data}
+        enableColumnActions={false}
+        enableGlobalFilter={false}
+        enableColumnFilters={true}
+        enablePagination={true}
+        enableBottomToolbar={true}
+        enableSorting={true}
+        muiTablePaginationProps={{
+          rowsPerPage:5,
+        }}
+        showSortIcon={true}
+        enableTopToolbar={false}
+        enableRowNumbers={true}
+        initialState={{ showColumnFilters: true,pagination:{} }}
+        state={{ isLoading: loading }}
+        muiTableBodyCellProps={{ className: classes.customTableCell, }}
+        muiTableBodyRowProps={{
+          className: classes.customTableRow,
+          hover: false,
+        }}
+        muiTableContainerProps={{ sx: { maxWidth: '99%' } }}
+       
+        // muiTableProps={{ sx: { maxWidth: '20%' } }}
+        // defaultColumn={{
+        //   maxSize: 400,
+        //   minSize: 150,
+        //   size: 150, //default size is usually 180
+        // }}
+        // enableColumnResizing
+        // columnResizeMode="onChange" //default
 
-    />
+      />
     </>
   )
 };
-// state={{ isLoading:loading }} enableRowNumbers
 export default Table;
