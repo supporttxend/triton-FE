@@ -24,7 +24,7 @@ const Table = () => {
   }, []);
   async function fetchData() {
     try {
-      const response = await axios.get(`${env.PYTHON_MAIN_API}data`)
+      const response = await axios.get(`${env.PYTHON_MAIN_API}/data`)
       if (response.data.status === 200) {
         setData(response.data.data)
       }
