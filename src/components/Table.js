@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from "axios";
+import env from "react-dotenv";
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -23,7 +24,7 @@ const Table = () => {
   }, []);
   async function fetchData() {
     try {
-      const response = await axios.get('http://localhost:2001/data')
+      const response = await axios.get(`${env.PYTHON_MAIN_API}data`)
       if (response.data.status === 200) {
         setData(response.data.data)
       }
