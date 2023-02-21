@@ -2,22 +2,10 @@ import React, { useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from "axios";
 import env from "react-dotenv";
-<<<<<<< Updated upstream
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
-  customTableRow: {
-    '&:hover': {
-      backgroundColor: '#B7E5FF',
-    },
-  },
-  
-});
-
-=======
 import './Table.css';
 
->>>>>>> Stashed changes
+
 const Table = () => {
   const [data, setData] = useState([]);
   const [loading, setloading] = useState(false);
@@ -39,7 +27,6 @@ const Table = () => {
 
 
   }
-
   const columns = useMemo(
     () => [
       {
@@ -49,7 +36,7 @@ const Table = () => {
         enableGlobalFilter: true,
         enableSorting: true,
         showSortIcon: true,
-        
+
       },
 
       {
@@ -80,7 +67,7 @@ const Table = () => {
       {
         accessorKey: 'distribution_version',
         header: 'Distribution Version',
-        size: 160,
+        size: 200,
       },
       {
         accessorKey: 'os_family',
@@ -95,7 +82,7 @@ const Table = () => {
       {
         accessorKey: 'processor_model',
         header: 'Processor Model',
-        size: 50,
+        size: 100,
       },
     ],
     [],
@@ -103,31 +90,6 @@ const Table = () => {
 
   return (
     <>
-<<<<<<< Updated upstream
-    <MaterialReactTable
-      columns={columns}
-      data={data}
-      enableColumnActions={false}
-      enableGlobalFilter={false}
-      enableColumnFilters={true}
-      enablePagination={false}
-      enableSorting={true}
-      showSortIcon={true}
-      enableBottomToolbar={false}
-      enableTopToolbar={false}
-      initialState={{ showColumnFilters: true }}
-      // muiTableHeadCellFilterTextFieldProps={{
-      //   sx: { m: '0.2rem 0', width: '100%' },
-      //   variant: 'outlined',
-        
-      // }}
-      muiTableBodyRowProps={{
-        className: classes.customTableRow,
-        hover: false,
-      }}
-
-    />
-=======
       <MaterialReactTable
         columns={columns}
         data={data}
@@ -169,9 +131,7 @@ const Table = () => {
       
       
       />
->>>>>>> Stashed changes
     </>
   )
 };
-// state={{ isLoading:loading }} enableRowNumbers
 export default Table;
