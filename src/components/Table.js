@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from "axios";
 import env from "react-dotenv";
+<<<<<<< Updated upstream
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -13,10 +14,13 @@ const useStyles = makeStyles({
   
 });
 
+=======
+import './Table.css';
+
+>>>>>>> Stashed changes
 const Table = () => {
   const [data, setData] = useState([]);
   const [loading, setloading] = useState(false);
-  const classes = useStyles();
 
   useEffect(() => {
     setloading(true)
@@ -99,6 +103,7 @@ const Table = () => {
 
   return (
     <>
+<<<<<<< Updated upstream
     <MaterialReactTable
       columns={columns}
       data={data}
@@ -122,6 +127,49 @@ const Table = () => {
       }}
 
     />
+=======
+      <MaterialReactTable
+        columns={columns}
+        data={data}
+        enableColumnActions={false}
+        enableGlobalFilter={false}
+        enableColumnFilters={true}
+        enablePagination={true}
+        enableBottomToolbar={true}
+        enableSorting={true}
+        showSortIcon={true}
+        enableTopToolbar={false}
+        enableRowNumbers={true}
+        initialState={{ showColumnFilters: true,pagination:{} }}
+        state={{ isLoading: loading }}
+        muiTableBodyCellProps={{
+          sx: {
+            
+    padding: '0px',
+    margin: '0px',
+    '&:first-child': {
+      paddingLeft: '20px',
+    },
+    '&:last-child': {
+      paddingRight: '20px',
+    },
+  
+          }
+          }}
+        muiTableBodyRowProps={{
+          hover: false,
+          sx:{
+            '&:hover': {
+              backgroundColor: '#B7E5FF',
+            },
+          }
+          
+        }}
+        muiTableContainerProps={{ sx: { maxWidth: '99%' } }}
+      
+      
+      />
+>>>>>>> Stashed changes
     </>
   )
 };
