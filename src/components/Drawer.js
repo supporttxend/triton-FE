@@ -56,6 +56,7 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
+  backgroundColor:"#5EB9E9",
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -118,11 +119,11 @@ export default function MiniDrawer() {
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="h6" noWrap component="div" sx={{marginRight:3}}>
-            <Avatar />
+            <Avatar style={{ backgroundColor: '#BF8040' }} />
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -131,12 +132,15 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['Table'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem key={text} disablePadding sx={{ display: 'block','&:hover': {
+              backgroundColor: '#B7E5FF',
+            },}}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                  
                 }}
               >
                 <ListItemIcon

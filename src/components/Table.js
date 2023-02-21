@@ -111,8 +111,6 @@ const Table = () => {
   return (
     <>
       <MaterialReactTable
-      // size={"small"}
-      // enableStickyHeader={true}
         columns={columns}
         data={data}
         enableColumnActions={false}
@@ -121,9 +119,6 @@ const Table = () => {
         enablePagination={true}
         enableBottomToolbar={true}
         enableSorting={true}
-        muiTablePaginationProps={{
-          rowsPerPage:5,
-        }}
         showSortIcon={true}
         enableTopToolbar={false}
         enableRowNumbers={true}
@@ -135,16 +130,6 @@ const Table = () => {
           hover: false,
         }}
         muiTableContainerProps={{ sx: { maxWidth: '99%' } }}
-       
-        // muiTableProps={{ sx: { maxWidth: '20%' } }}
-        // defaultColumn={{
-        //   maxSize: 400,
-        //   minSize: 150,
-        //   size: 150, //default size is usually 180
-        // }}
-        // enableColumnResizing
-        // columnResizeMode="onChange" //default
-
       />
     </>
   )
