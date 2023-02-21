@@ -1,11 +1,11 @@
 import './App.css';
 import React from 'react'
-import Table from './components/Table';
+import MiniDrawer from './components/Drawer';
 
 function App() {
   return (
     <div className="App">
-      <Table />
+      <MiniDrawer />
     </div>
   );
 }
