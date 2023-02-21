@@ -2,33 +2,13 @@ import React, { useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from "axios";
 import env from "react-dotenv";
-import { makeStyles } from '@material-ui/core/styles';
+
 import './Table.css';
-
-const useStyles = makeStyles({
-  customTableRow: {
-    '&:hover': {
-      backgroundColor: '#B7E5FF',
-    },
-  },
-  customTableCell: {
-    padding: '0px',
-    margin: '0px',
-    '&:first-child': {
-      paddingLeft: '16px',
-    },
-    '&:last-child': {
-      paddingRight: '16px',
-    },
-  }
-
-});
 
 
 const Table = () => {
   const [data, setData] = useState([]);
   const [loading, setloading] = useState(false);
-  const classes = useStyles();
 
   useEffect(() => {
     setloading(true)
@@ -124,12 +104,32 @@ const Table = () => {
         enableRowNumbers={true}
         initialState={{ showColumnFilters: true,pagination:{} }}
         state={{ isLoading: loading }}
-        muiTableBodyCellProps={{ className: classes.customTableCell, }}
+        muiTableBodyCellProps={{
+          sx: {
+            
+    padding: '0px',
+    margin: '0px',
+    '&:first-child': {
+      paddingLeft: '20px',
+    },
+    '&:last-child': {
+      paddingRight: '20px',
+    },
+  
+          }
+          }}
         muiTableBodyRowProps={{
-          className: classes.customTableRow,
           hover: false,
+          sx:{
+            '&:hover': {
+              backgroundColor: '#B7E5FF',
+            },
+          }
+          
         }}
         muiTableContainerProps={{ sx: { maxWidth: '99%' } }}
+      
+      
       />
     </>
   )
