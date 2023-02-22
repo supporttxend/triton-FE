@@ -104,20 +104,6 @@ const Table = () => {
         enableRowNumbers={true}
         initialState={{ showColumnFilters: true,pagination:{} }}
         state={{ isLoading: loading }}
-        muiTableBodyCellProps={{
-          sx: {
-            
-    padding: '0px',
-    margin: '0px',
-    '&:first-child': {
-      paddingLeft: '20px',
-    },
-    '&:last-child': {
-      paddingRight: '20px',
-    },
-  
-          }
-          }}
         muiTableBodyRowProps={{
           hover: false,
           sx:{
