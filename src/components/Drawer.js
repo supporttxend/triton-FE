@@ -18,8 +18,14 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import TableChartIcon from '@mui/icons-material/TableChart';
+import { makeStyles } from '@mui/styles';
+
 
 import Table from './Table';
+
+
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -56,7 +62,7 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  backgroundColor:"#5EB9E9",
+  backgroundColor: "#5EB9E9",
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -88,9 +94,66 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+const useStyles = makeStyles({
+  mainBox: {
+    display: 'flex',
+  },
+  appBar: {
+    position: "fixed",
+  },
+  iconBtnDisplay: {
+    display:  'show !important'
+  },
+  iconBtnNone: {
+    display: 'none !important' 
+  },
+  listItemDisplay: {
+    minHeight: 48,
+    justifyContent: 'initial',
+    px: 2.5,
+  },
+  listItemNone: {
+    minHeight: 48,
+    justifyContent: 'center',
+    px: 2.5,
+  },
+  listTextDisplay: {
+    opacity:0
+  },
+  listTextNone: {
+    opacity:1
+  },
+  listIconNone: {
+    minWidth: 0,
+    mr: 3,
+    justifyContent: 'center',
+  },
+  secondBox: {
+    flexGrow: 1
+  },
+  typography: {
+    marginRight: 3
+  },
+  avatars: {
+    backgroundColor: '#BF8040 !important'
+  },
+  list: {
+    display: 'block',
+    '&:hover': {
+      backgroundColor: '#B7E5FF'
+    }
+  },
+  thirdBox: {
+    flexGrow: 1,
+    p: 3
+  }
+});
+
+export default function MiniDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
+  const classes = useStyles(open);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -101,25 +164,23 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box className={classes.mainBox}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar className={classes.appBar} open={open}>
         <Toolbar>
           <IconButton
+            hidden={true}
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
+             className={!open ? classes.iconBtnDisplay: classes.iconBtnNone }
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <Typography variant="h6" noWrap component="div" sx={{marginRight:3}}>
-            <Avatar style={{ backgroundColor: '#BF8040' }} />
+          <Box className={classes.secondBox} />
+          <Typography variant="h6" noWrap component="div" className={classes.typography}>
+            <Avatar className={classes.avatars} />
           </Typography>
         </Toolbar>
       </AppBar>
@@ -132,37 +193,26 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['Table'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block','&:hover': {
-              backgroundColor: '#B7E5FF',
-            },}}>
+            <ListItem key={text} disablePadding className={classes.list} >
               <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                  
-                }}
+              className={!open ? classes.listItemDisplay: classes.listItemNone }
               >
                 <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
+                className={!open ? classes.listIconDisplay: classes.listIconNone }
                 >
                   {index % 2 === 0 ? <TableChartIcon /> : <TableChartIcon />}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={text} className={!open ? classes.listTextDisplay: classes.listTextNone }  />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" className={classes.thirdBox}>
         <DrawerHeader />
         <Table />
       </Box>
-    </Box>
+    </Box >
   );
 }
