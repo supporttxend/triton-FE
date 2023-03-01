@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import { makeStyles } from '@mui/styles';
+import logo from '../images/logo.png';
 
 
 import Table from './Table';
@@ -135,7 +136,8 @@ const useStyles = makeStyles({
     marginRight: 3
   },
   avatars: {
-    backgroundColor: '#BF8040 !important'
+    backgroundColor: '#BF8040 !important',
+    float: 'right'
   },
   list: {
     display: 'block',
@@ -146,15 +148,25 @@ const useStyles = makeStyles({
   thirdBox: {
     flexGrow: 1,
     p: 3
+  },
+  logo: {
+    float: 'left',
+  },
+  text: {
+    marginLeft:"10px",
+    marginTop:'5px',
+    fontSize: '19px'
+  },
+  textRightIcon: {
+    marginLeft: '4px',
+    marginTop: '4px'
   }
 });
 
 export default function MiniDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const classes = useStyles(open);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -178,6 +190,9 @@ export default function MiniDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
+  { !open&&
+          <><img src={logo} alt="logo" className={classes.logo} /><p className={classes.text}>Triton Digital</p><small className={classes.textRightIcon}>®</small></>
+  }
           <Box className={classes.secondBox} />
           <Typography variant="h6" noWrap component="div" className={classes.typography}>
             <Avatar className={classes.avatars} />
@@ -186,6 +201,9 @@ export default function MiniDrawer(props) {
       </AppBar>
       <Drawer variant="permanent" open={open} >
         <DrawerHeader>
+        <img src={logo} alt="logo" className={classes.logo} />
+          <p className={classes.text}>Triton Digital</p>
+          <small className={classes.textRightIcon}>®</small>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
