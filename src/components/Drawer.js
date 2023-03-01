@@ -18,6 +18,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import TableChartIcon from '@mui/icons-material/TableChart';
+import { makeStyles } from '@mui/styles';
+import logo from '../images/logo.png';
+
 
 import Table from './Table';
 const drawerWidth = 240;
@@ -88,10 +91,78 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+const useStyles = makeStyles({
+  mainBox: {
+    display: 'flex',
+  },
+  appBar: {
+    position: "fixed",
+  },
+  iconBtnDisplay: {
+    display:  'show !important'
+  },
+  iconBtnNone: {
+    display: 'none !important' 
+  },
+  listItemDisplay: {
+    minHeight: 48,
+    justifyContent: 'initial',
+    px: 2.5,
+  },
+  listItemNone: {
+    minHeight: 48,
+    justifyContent: 'center',
+    px: 2.5,
+  },
+  listTextDisplay: {
+    opacity:0
+  },
+  listTextNone: {
+    opacity:1
+  },
+  listIconNone: {
+    minWidth: 0,
+    mr: 3,
+    justifyContent: 'center',
+  },
+  secondBox: {
+    flexGrow: 1
+  },
+  typography: {
+    marginRight: 3
+  },
+  avatars: {
+    backgroundColor: '#BF8040 !important',
+    float: 'right'
+  },
+  list: {
+    display: 'block',
+    '&:hover': {
+      backgroundColor: '#B7E5FF'
+    }
+  },
+  thirdBox: {
+    flexGrow: 1,
+    p: 3
+  },
+  logo: {
+    float: 'left',
+  },
+  text: {
+    marginLeft:"10px",
+    marginTop:'5px',
+    fontSize: '19px'
+  },
+  textRightIcon: {
+    marginLeft: '4px',
+    marginTop: '4px'
+  }
+});
+
+export default function MiniDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const classes = useStyles(open);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -117,14 +188,20 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <Typography variant="h6" noWrap component="div" sx={{marginRight:3}}>
-            <Avatar style={{ backgroundColor: '#BF8040' }} />
+  { !open&&
+          <><img src={logo} alt="logo" className={classes.logo} /><p className={classes.text}>Triton Digital</p><small className={classes.textRightIcon}>®</small></>
+  }
+          <Box className={classes.secondBox} />
+          <Typography variant="h6" noWrap component="div" className={classes.typography}>
+            <Avatar className={classes.avatars} />
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} >
         <DrawerHeader>
+        <img src={logo} alt="logo" className={classes.logo} />
+          <p className={classes.text}>Triton Digital</p>
+          <small className={classes.textRightIcon}>®</small>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
