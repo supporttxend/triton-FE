@@ -191,7 +191,7 @@ export default function MiniDrawer(props) {
             <MenuIcon />
           </IconButton>
   { !open&&
-          <><img src={logo} alt="logo" className={classes.logo} /><p className={classes.text}>Triton Digital</p><small className={classes.textRightIcon}>®</small></>
+          <><img src={logo} alt="logo" className={classes.logo} /><p className={classes.text}>Triton Digital</p><small className={classes.textRightIcon}></small></>
   }
           <Box className={classes.secondBox} />
           <Typography variant="h6" noWrap component="div" className={classes.typography}>
