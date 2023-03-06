@@ -3,12 +3,16 @@ import MaterialReactTable from 'material-react-table';
 import axios from "axios";
 import env from "react-dotenv";
 
+
+
 import './Table.css';
+
 
 
 const Table = () => {
   const [data, setData] = useState([]);
   const [loading, setloading] = useState(false);
+  const [showExpandedColumns, setVisibilityExpandedColumns] = useState(true)
 
   useEffect(() => {
     setloading(true)
@@ -30,59 +34,117 @@ const Table = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'job_ID',
-        header: 'Job ID',
-        size: 5,
-        enableGlobalFilter: true,
-        enableSorting: true,
-        showSortIcon: true,
-
-      },
-
-      {
-        accessorKey: 'Line_ID',
-        header: 'Line ID',
-        size: 5,
-      },
-      {
         accessorKey: 'Asset_ID',
         header: 'Asset ID',
         size: 5,
+
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
+      },
+      {
+        accessorKey: 'Enabled',
+        header: 'Enabled',
+        size: 20,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
+      },
+      {
+        accessorKey: 'Asset_Name',
+        header: 'Asset Name',
+        size: 50,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
+      },
+      {
+        accessorKey: 'Created_At',
+        header: 'Created Date',
+        size: 50,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
+      },
+      {
+        accessorKey: 'Last_Update_Date',
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
       },
       {
         accessorKey: 'Ansible_Hostname',
-        header: 'Ansible Hostname	',
-        size: 20,
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
       },
       {
-        accessorKey: 'inventory_hostname',
-        header: 'Inventory Hostname	',
-        size: 50,
+        accessorKey: 'Job_ID',
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
+      },
+      {
+        accessorKey: 'Line_ID',
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
       },
       {
         accessorKey: 'distribution',
-        header: 'Distribution',
-        size: 50,
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
       },
       {
         accessorKey: 'distribution_version',
-        header: 'Distribution Version',
+        header: 'Last Updated Date',
         size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
+      },
+      {
+        accessorKey: 'inventory_hostname',
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
       },
       {
         accessorKey: 'os_family',
-        header: 'Os Family',
-        size: 50,
-      },
-      {
-        accessorKey: 'processor_type',
-        header: 'Processor Type',
-        size: 50,
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
       },
       {
         accessorKey: 'processor_model',
-        header: 'Processor Model',
-        size: 100,
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
+      },
+      {
+        accessorKey: 'processor_type',
+        header: 'Last Updated Date',
+        size: 200,
+        muiTableBodyCellProps: {
+          align: 'center',
+        },
       },
     ],
     [],
@@ -90,6 +152,7 @@ const Table = () => {
 
   return (
     <>
+
       <MaterialReactTable
         columns={columns}
         data={data}
@@ -101,23 +164,61 @@ const Table = () => {
         enableSorting={true}
         showSortIcon={true}
         enableTopToolbar={false}
-        enableRowNumbers={true}
-        initialState={{ showColumnFilters: true,pagination:{} }}
+        enableRowNumbers={false}
+
+        initialState={{
+          showColumnFilters: true,
+          pagination: {},
+          columnVisibility: {
+            Asset_ID: !showExpandedColumns,
+            Asset_Name:!showExpandedColumns,
+            Created_At: !showExpandedColumns,
+            Enabled: !showExpandedColumns,
+            Last_Update_Date: !showExpandedColumns,
+            Ansible_Hostname: showExpandedColumns,
+            Job_ID: showExpandedColumns,
+            Line_ID: showExpandedColumns,
+            distribution: showExpandedColumns,
+            distribution_version: showExpandedColumns,
+            inventory_hostname: showExpandedColumns,
+            os_family: showExpandedColumns,
+            processor_model: showExpandedColumns,
+            processor_type: showExpandedColumns,
+          }
+        }}
         state={{ isLoading: loading }}
         muiTableBodyRowProps={{
           hover: false,
-          sx:{
+          sx: {
             '&:hover': {
               backgroundColor: '#B7E5FF',
             },
+
           }
-          
+
+        }}
+        // onExpandedChange={() => {
+        //  g
+        //   setVisibilityExpandedColumns(false)
+        //   console.log(showExpandedColumns)
+        // }}
+        // getIsRowExpanded={() => {
+        //   setVisibilityExpandedColumns(true)
+        // }}
+        getIsRowExpanded={(row)=>{console.log("dddddd",row)}}
+        muiTableBodyCellProps={{
+          sx: {
+            padding: "0.5rem"
+          }
         }}
         muiTableContainerProps={{ sx: { maxWidth: '99%' } }}
-      
-      
+        enableExpanding
       />
     </>
   )
 };
 export default Table;
+
+
+
+
