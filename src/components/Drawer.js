@@ -151,6 +151,7 @@ const useStyles = makeStyles({
   },
   logo: {
     float: 'left',
+    marginLeft: '20px'
   },
   text: {
     marginLeft:"10px",
