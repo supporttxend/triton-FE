@@ -1,224 +1,138 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from "axios";
-import env from "react-dotenv";
-
-
-
 import './Table.css';
+import { DataGrid } from '@mui/x-data-grid';
+
+
+const column = [
+    { field: 'Job_ID', headerName: 'Job ID', width: 160,},
+    { field: 'Line_ID', headerName: 'Line ID', width: 160 },
+    { field: 'Ansible_Hostname', headerName: 'Ansible Hostname', width: 160 },
+    { field: 'inventory_hostname', headerName: 'Inventory Hostname', width: 160 },
+    { field: 'distribution', headerName: 'Distribution', width: 160 },
+    { field: 'distribution_version', headerName: 'Distribution Version', width: 160 },
+    { field: 'os_family', headerName: 'Os Family', width: 160 },
+    { field: 'processor_type', headerName: 'Processor Type', width: 160 },
+    { field: 'processor_model', headerName: 'Processor Model', width: 160 },
+];
 
 
 
-const Table = () => {
-  const [data, setData] = useState([]);
-  const [loading, setloading] = useState(false);
-  const [showExpandedColumns, setVisibilityExpandedColumns] = useState(true)
+const AssetTable = () => {
+    const [data, setData] = useState([]);
+    const [loading, setloading] = useState(false);
+    let dataArr = [];
+    useEffect(() => {
+        setloading(true)
+        fetchData()
+    }, []);
 
-  useEffect(() => {
-    setloading(true)
-    fetchData()
-  }, []);
-  async function fetchData() {
-    try {
-      const response = await axios.get(`${env.PYTHON_MAIN_API}/data`)
-      if (response.data.status === 200) {
-        setData(response.data.data)
-      }
-      setloading(false)
-    } catch (error) {
-      setloading(false)
+    async function fetchData() {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_PYTHON_MAIN_API}/data`)
+            if (response.data.status === 200) {
+                setData(response.data.data)
+            }
+            setloading(false)
+        } catch (error) {
+            setloading(false)
+        }
     }
 
+    const columns = [
+        {
+            accessorKey: 'Asset_ID',
+            header: 'Asset ID',
+            size: 5,
+        },
+        {
+            accessorKey: 'Enabled',
+            header: 'Enabled',
+            size: 20,
+        },
+        {
+            accessorKey: 'Asset_Name',
+            header: 'Asset Name',
+            size: 50,
+        },
+        {
+            accessorKey: 'Created_At',
+            header: 'Created Date',
+            size: 50,
+        },
+        {
+            accessorKey: 'Last_Update_Date',
+            header: 'Last Updated Date',
+            size: 200,
+        },
+    ]
 
-  }
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: 'Asset_ID',
-        header: 'Asset ID',
-        size: 5,
+    return (
+        <>
 
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'Enabled',
-        header: 'Enabled',
-        size: 20,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'Asset_Name',
-        header: 'Asset Name',
-        size: 50,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'Created_At',
-        header: 'Created Date',
-        size: 50,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'Last_Update_Date',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'Ansible_Hostname',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'Job_ID',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'Line_ID',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'distribution',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'distribution_version',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'inventory_hostname',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'os_family',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'processor_model',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-      {
-        accessorKey: 'processor_type',
-        header: 'Last Updated Date',
-        size: 200,
-        muiTableBodyCellProps: {
-          align: 'center',
-        },
-      },
-    ],
-    [],
-  );
+            <MaterialReactTable
+                columns={columns}
+                data={data}
+                enableColumnActions={false}
+                enableGlobalFilter={false}
+                enableColumnFilters={true}
+                enablePagination={true}
+                enableBottomToolbar={true}
+                enableSorting={true}
+                showSortIcon={true}
+                enableTopToolbar={false}
+                enableRowNumbers={false}
+                initialState={{
+                    showColumnFilters: true,
+                    pagination: {}
+                }}
+                state={{ isLoading: loading }}
+                muiTableBodyRowProps={{
+                    hover: false,
+                    sx: {
+                        '&:hover': {
+                            backgroundColor: '#B7E5FF',
+                        },
 
-  return (
-    <>
+                    },
 
-      <MaterialReactTable
-        columns={columns}
-        data={data}
-        enableColumnActions={false}
-        enableGlobalFilter={false}
-        enableColumnFilters={true}
-        enablePagination={true}
-        enableBottomToolbar={true}
-        enableSorting={true}
-        showSortIcon={true}
-        enableTopToolbar={false}
-        enableRowNumbers={false}
+                }}
 
-        initialState={{
-          showColumnFilters: true,
-          pagination: {},
-          columnVisibility: {
-            Asset_ID: !showExpandedColumns,
-            Asset_Name:!showExpandedColumns,
-            Created_At: !showExpandedColumns,
-            Enabled: !showExpandedColumns,
-            Last_Update_Date: !showExpandedColumns,
-            Ansible_Hostname: showExpandedColumns,
-            Job_ID: showExpandedColumns,
-            Line_ID: showExpandedColumns,
-            distribution: showExpandedColumns,
-            distribution_version: showExpandedColumns,
-            inventory_hostname: showExpandedColumns,
-            os_family: showExpandedColumns,
-            processor_model: showExpandedColumns,
-            processor_type: showExpandedColumns,
-          }
-        }}
-        state={{ isLoading: loading }}
-        muiTableBodyRowProps={{
-          hover: false,
-          sx: {
-            '&:hover': {
-              backgroundColor: '#B7E5FF',
-            },
+                muiTableBodyCellProps={{
+                    sx: {
+                        padding: "0.5rem"
+                    }
+                }}
+                muiTableContainerProps={{ sx: { maxWidth: '99%' } }}
 
-          }
+                filterFromLeafRows
+                renderDetailPanel={
+                    ({ row }) => (
+                    dataArr = row.original.subRow?.map((subRows,index) => { return { ...subRows, id: index}; }),
+                    <div style={{ height:'400px' ,width: '100%' }}>
+                        <DataGrid
+                        rows={dataArr}
+                        columns={column}
+                        pageSize={10}
+                        rowsPerPageOptions={[10]}
 
-        }}
-        // onExpandedChange={() => {
-        //  g
-        //   setVisibilityExpandedColumns(false)
-        //   console.log(showExpandedColumns)
-        // }}
-        // getIsRowExpanded={() => {
-        //   setVisibilityExpandedColumns(true)
-        // }}
-        getIsRowExpanded={(row)=>{console.log("dddddd",row)}}
-        muiTableBodyCellProps={{
-          sx: {
-            padding: "0.5rem"
-          }
-        }}
-        muiTableContainerProps={{ sx: { maxWidth: '99%' } }}
-        enableExpanding
-      />
-    </>
-  )
+                      />
+                      </div>
+
+                )}
+                muiTableDetailPanelProps={{
+                    sx: {
+                        '&:hover': {
+                            backgroundColor: 'white',
+                        },
+
+                    },
+                }}
+            />
+        </>
+    )
 };
-export default Table;
-
-
+export default AssetTable;
 
 
